@@ -21,7 +21,7 @@ const sessionMiddleWare = session({
 const wrap = (expressMiddleWare) => (socket,next) => expressMiddleWare(socket.request,{},next)
 
 const corsConfig = {
-    origin:process.env.CLIENT_URL,
+    origin:`https://chat-pheonix.netlify.app`,
     credentials:true,
 }
 
