@@ -13,6 +13,10 @@ const server = require("http").createServer(app);
 const io = new Server(server,{cors:corsConfig})
 
 app.use(helmet())
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://chat-pheonix.netlify.app');
+    next();
+  });
 app.use(cors(corsConfig))
 app.use(express.json())
 app.use(sessionMiddleWare)
