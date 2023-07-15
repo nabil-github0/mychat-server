@@ -20,13 +20,31 @@ app.use(express.json());
 
 app.use(sessionMiddleWare);
 
+app.options("/auth/login", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://chat-pheonix.netlify.app");
+  res.setHeader("Access-Control-Allow-Methods", "POST");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.sendStatus(200);
+});
+
+app.options("/auth/register", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://chat-pheonix.netlify.app");
+  res.setHeader("Access-Control-Allow-Methods", "POST");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.sendStatus(200);
+});
+
+
 app.use("/auth", authRouter);
+
+app.set("trust proxy", 1);
 
 app.get("/", (req, res) => {
   res.json("Lol");
 });
 
 io.use(wrap(sessionMiddleWare));
+
 io.use(authorizeUser);
 io.on("connect", (socket) => {
   initializeUser(socket);
