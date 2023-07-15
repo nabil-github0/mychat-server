@@ -14,7 +14,6 @@ const io = new Server(server, { cors: corsConfig });
 
 app.use(helmet());
 
-// Enable CORS for Express routes
 app.use(cors(corsConfig));
 
 app.use(express.json());
