@@ -23,7 +23,7 @@ app.use(sessionMiddleWare);
 app.use("/auth", authRouter);
 
 app.get("/", (req, res) => {
-  res.json("Lol");
+  res.json("lol");
 });
 
 io.use(wrap(sessionMiddleWare));
