@@ -22,7 +22,7 @@ const wrap = (expressMiddleWare) => (socket, next) =>
   expressMiddleWare(socket.request, {}, next);
 
 const corsConfig = {
-  origin:"https://chat-pheonix.netlify.app",
+  origin:process.env.CLIENT_URL,
   credentials: true,
 };
 
