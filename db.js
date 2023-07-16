@@ -7,7 +7,6 @@ const pool = new Pool({
     host:process.env.POSTGRES_HOST,
     password:process.env.POSTGRES_PASSWORD,
     user:process.env.POSTGRES_USER,
-    port:5432
 })
 
 module.exports = pool;
