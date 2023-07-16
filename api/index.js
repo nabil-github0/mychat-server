@@ -16,14 +16,25 @@ app.use(helmet());
 
 app.use(cors(corsConfig));
 
-app.options((req,res,next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,PATCH,DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type, Authorization");
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    res.status(204).end()   
-    next()
-})
+const whitelist = ['*'];
+
+app.use((req, res, next) => {
+  const origin = req.get('referer');
+  const isWhitelisted = whitelist.includes(origin);
+  
+  if (isWhitelisted) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+  }
+
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
 app.use(express.json());
 
