@@ -3,9 +3,9 @@ const { Server } = require("socket.io");
 const app = express();
 const helmet = require("helmet");
 const cors = require("cors");
-const authRouter = require("./router/authRouter");
-const { sessionMiddleWare, wrap, corsConfig } = require("./controllers/serverController");
-const { authorizeUser, initializeUser, addFriend, onDisconnect, dm } = require("./controllers/socketController");
+const authRouter = require("../router/authRouter");
+const { sessionMiddleWare, wrap, corsConfig } = require("../controllers/serverController");
+const { authorizeUser, initializeUser, addFriend, onDisconnect, dm } = require("../controllers/socketController");
 require("dotenv").config();
 
 const server = require("http").createServer(app);
@@ -15,6 +15,15 @@ const io = new Server(server, { cors: corsConfig });
 app.use(helmet());
 
 app.use(cors(corsConfig));
+
+app.options((req,res,next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,PATCH,DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    res.status(204).end()   
+    next()
+})
 
 app.use(express.json());
 
