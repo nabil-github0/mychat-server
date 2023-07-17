@@ -24,8 +24,6 @@ const wrap = (expressMiddleWare) => (socket, next) =>
 const corsConfig = {
   origin:process.env.CLIENT_URL,
   credentials: true,
-  preflightContinue: true,
-  optionsSuccessStatus: 204,
 };
 
 module.exports = { sessionMiddleWare, wrap, corsConfig };

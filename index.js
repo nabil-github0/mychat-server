@@ -3,9 +3,9 @@ const { Server } = require("socket.io");
 const app = express();
 const helmet = require("helmet");
 const cors = require("cors");
-const authRouter = require("../router/authRouter");
-const { sessionMiddleWare, wrap, corsConfig } = require("../controllers/serverController");
-const { authorizeUser, initializeUser, addFriend, onDisconnect, dm } = require("../controllers/socketController");
+const authRouter = require("./router/authRouter");
+const { sessionMiddleWare, wrap, corsConfig } = require("./controllers/serverController");
+const { authorizeUser, initializeUser, addFriend, onDisconnect, dm } = require("./controllers/socketController");
 require("dotenv").config();
 
 const server = require("http").createServer(app);
@@ -15,26 +15,6 @@ const io = new Server(server, { cors: corsConfig });
 app.use(helmet());
 
 app.use(cors(corsConfig));
-
-const whitelist = ['*'];
-
-app.use((req, res, next) => {
-  const origin = req.get('referer');
-  const isWhitelisted = whitelist.includes(origin);
-  
-  if (isWhitelisted) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-  }
-
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
 
 app.use(express.json());
 
@@ -61,3 +41,4 @@ io.on("connect", (socket) => {
 server.listen(process.env.PORT || 4000, () => {
   console.log(`Server is listening to port ${process.env.PORT || "4000"}`);
 });
+
