@@ -12,7 +12,6 @@ const sessionMiddleWare = session({
   saveUninitialized: false,
   cookie: {
     secure:"auto",
-    httpOnly: true,
     expires: 1000 * 60 * 60 * 24 * 7,
     sameSite:"lax",
   },
