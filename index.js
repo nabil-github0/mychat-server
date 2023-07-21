@@ -39,6 +39,7 @@ io.on("connect", (socket) => {
 });
 
 server.listen(process.env.PORT || 4000, () => {
+  console.log(`Server is running on ${process.env.NODE_ENV} mode`)
   console.log(`Server is listening to port ${process.env.PORT || "4000"}`);
 });
 
