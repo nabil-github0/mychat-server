@@ -1,16 +1,23 @@
-const redisClient = require("../redis")
+const redisClient = require("../redis");
+const { jwtVerify } = require("./jwt/jwtAuth");
+require("dotenv").config();
 
 module.exports.authorizeUser = (socket,next) => {
-    if(!socket.request.session || !socket.request.session.user) {
-        console.log("Bad request")
-        next(new Error("Not authorized"))
-    }else {
+    const token = socket.handshake.auth.token;
+
+    console.log(token)
+
+    jwtVerify(token, process.env.JWT_SECRET)
+    .then(decoded => {
+        socket.user = {...decoded};
         next()
-    }
+    }).catch(err => {
+        console.log("Bad request",  err)
+        next(new Error("Not authorized"))
+    })
 }
 
 module.exports.initializeUser = async socket => {
-    socket.user = {...socket.request.session.user}
     socket.join(socket.user.userid)
     await redisClient.hset(`userid:${socket.user.username}`, "connected", true);
     await redisClient.hset(`userid:${socket.user.username}`, "userid", socket.user.userid);
