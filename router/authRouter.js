@@ -12,5 +12,5 @@ router
   .route("/login")
   .get(handleLogin)
   .post(validateForm, rateLimiter(60, 10), attemptLogin);
-router.post("/signup", validateForm, rateLimiter(30, 4), attemptRegister);
+router.post("/register", validateForm, rateLimiter(30, 4), attemptRegister);
 module.exports = router;
