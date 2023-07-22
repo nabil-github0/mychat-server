@@ -3,7 +3,7 @@ const redisClient = require("../../redis");
 const dm = async (socket, message) => {
   message.from = socket.user.userid;
   const messageString = [message.to, message.from, message.content, message.time].join(
-    "."
+    "^"
   );
 
   await redisClient.lpush(`chat:${message.to}`, messageString);

@@ -36,7 +36,7 @@ const initializeUser = async socket => {
   );
 
   const messages = msgQuery.map(msgStr => {
-    const parsedStr = msgStr.split(".");
+    const parsedStr = msgStr.split("^");
     return { to: parsedStr[0], from: parsedStr[1], content: parsedStr[2], time:parsedStr[3] };
   });
 
