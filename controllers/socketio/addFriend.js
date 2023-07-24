@@ -25,7 +25,7 @@ const addFriend = async (socket, friendName, cb) => {
 
   await redisClient.lpush(
     `friends:${socket.user.username}`,
-    [friendName, friend.userid].join("^")
+    [friendName, friend.userid].join("|*|")
   );
 
   const newFriend = {

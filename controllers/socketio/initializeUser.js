@@ -1,9 +1,12 @@
 const redisClient = require("../../redis");
-const addFriend = require("./addFriend");
 const parseFriendList = require("./parseFriendList");
+const CryptoJS = require('crypto-js');
+require("dotenv").config()
+const secretKey = process.env.CRYPTO_SECRET;
 
 const initializeUser = async socket => {
   socket.join(socket.user.userid);
+
   await redisClient.hset(
     `userid:${socket.user.username}`,
     "userid",
@@ -36,8 +39,9 @@ const initializeUser = async socket => {
   );
 
   const messages = msgQuery.map(msgStr => {
-    const parsedStr = msgStr.split("^");
-    return { to: parsedStr[0], from: parsedStr[1], content: parsedStr[2], time:parsedStr[3] };
+    const parsedStr = msgStr.split("|*|");
+    const decryptedMessage = CryptoJS.AES.decrypt(parsedStr[2], secretKey).toString(CryptoJS.enc.Utf8);
+    return { to: parsedStr[0], from: parsedStr[1], content: decryptedMessage, time:parsedStr[3] };
   });
 
   if (messages && messages.length > 0) {
