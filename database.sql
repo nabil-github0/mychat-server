@@ -4,5 +4,3 @@ CREATE TABLE users(
     passhash VARCHAR NOT NULL,
     userid VARCHAR NOT NULL UNIQUE
 );
-
-INSERT INTO users(username,passhash) VALUES ($1,$2);

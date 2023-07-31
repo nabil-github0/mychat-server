@@ -25,10 +25,13 @@ const initializeUser = async socket => {
     -1
   );
   const parsedFriendList = await parseFriendList(friendList);
+  
   const friendRooms = parsedFriendList.map(friend => friend.userid);
 
-  if (friendRooms.length > 0)
+  if (friendRooms.length > 0) {
     socket.to(friendRooms).emit("connected", true, socket.user.username);
+
+  }
 
   socket.emit("friends", parsedFriendList);
 
