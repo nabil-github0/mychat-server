@@ -47,9 +47,8 @@ const initializeUser = async socket => {
     return { to: parsedStr[0], from: parsedStr[1], content: decryptedMessage, time:parsedStr[3] };
   });
 
-  if (messages && messages.length > 0) {
-    socket.emit("messages", messages);
-  }
+  socket.emit("messages", messages);
+  
 };
 
 module.exports = initializeUser;
