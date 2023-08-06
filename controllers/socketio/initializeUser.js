@@ -30,7 +30,6 @@ const initializeUser = async socket => {
 
   if (friendRooms.length > 0) {
     socket.to(friendRooms).emit("connected", true, socket.user.username);
-
   }
 
   socket.emit("friends", parsedFriendList);
