@@ -27,7 +27,11 @@ const attemptRegister = async (req, res) => {
       { expiresIn: "7d" }
     )
       .then(token => {
-        res.json({ loggedIn: true, token });
+        res.json({
+          username: newUserQuery.rows[0].username, 
+          loggedIn: true, 
+          token 
+        });
       })
       .catch(err => {
         console.log(err);

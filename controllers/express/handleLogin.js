@@ -18,11 +18,18 @@ const handleLogin = async (req, res) => {
       );
 
       if (potentialUser.rowCount === 0) {
-        res.json({ loggedIn: false, token: null });
+        res.json({ 
+          loggedIn: false, 
+          token: null 
+        });
         return;
       }
 
-      res.json({ loggedIn: true, token });
+      res.json({
+        username:decoded.username,
+        loggedIn: true, 
+        token 
+      });
     })
     .catch(() => {
       res.json({ loggedIn: false });
