@@ -28,9 +28,7 @@ io.use(authorizeUser);
 
 io.on("connect", (socket) => {
   initializeUser(socket);
-  socket.on("add_friend", (friendname, cb) => {
-    addFriend(socket, friendname, cb);
-  });
+  socket.on("add_friend", (friendname, cb) => addFriend(socket, friendname, cb));
   socket.on("dm", (message) => dm(socket, message));
   socket.on("disconnecting", () => onDisconnect(socket));
 });
